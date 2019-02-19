@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springys.Dao.MainDao">
+    <resultMap id="mmm" type="com.springys.entity.Aj">
+        <result property="dbserver_config_id" column="dbserver_config_id"/>
+        <result property="id" column="id"/>
+        <result property="alias" column="alias"/>
+        <result property="config" column="config"/>
+        <result property="db_name" column="db_name"/>
+        <result property="db_type_id" column="db_type_id"/>
+        <result property="repository_id" column="repository_id"/>
+    </resultMap>
+    <select id="getDataBaseList" resultMap="mmm">
+    SELECT
+    dbserver_config_id,
+    id,
+    alias,
+    config,
+    db_name,
+    db_type_id,
+    repository_id
+    FROM db
+</select>
+    <insert id="exitDatabase">
+    INSERT INTO db (config,db_name,repository_id,dbserver_config_id,db_type_id,alias,create_time)
+    VALUES (#{config},#{db_name},#{repository_id},#{dbserver_config_id},#{db_type_id},#{alias},#{create_time})
+</insert>
+    <delete id="deleteDatabase">
+DELETE FROM db WHERE id=#{id}
+</delete>
+    <resultMap id="nnn" type="com.springys.entity.SelectPassword">
+        <result property="create_time" column="create_time"/>
+        <result property="id" column="id"/>
+        <result property="password" column="password"/>
+        <result property="update_time" column="update_time"/>
+    </resultMap>
+    <select id="login" resultMap="nnn">
+        SELECT * FROM password AS a WHERE a.password=#{password}
+    </select>
+    <resultMap id="user1" type="com.springys.entity.BigData">
+        <result property="plantform_val" column="plantform_val"/>
+        <result property="platform_id" column="platform_id"/>
+        <result property="platform_name" column="platform_name"/>
+    </resultMap>
+    <select id="Sinformation" resultMap="user1">
+SELECT * FROM plantform_config WHERE platform_name=#{user}
+    </select>
+    <resultMap id="page" type="com.springys.entity.Students">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="password" property="password"/>
+        <result column="uid" property="uid"/>
+    </resultMap>
+    <select id="pageSelect" resultMap="page">
+SELECT * FROM student
+    </select>
+</mapper>
